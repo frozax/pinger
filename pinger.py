@@ -12,7 +12,12 @@ if len(sys.argv) <= 1:
 colorama.init()
 
 host = sys.argv[1]
-cmd_line = "ping -n -c1 %s > /dev/null" % host
+if "www." in host:
+    print("Using wget")
+    cmd_line = "wget --timeout=5 --tries=1 https://%s > /dev/null 2>&1" % host
+else:
+    print("using ping")
+    cmd_line = "ping -n -c1 %s > /dev/null" % host
 
 def compute_up():
     try:
